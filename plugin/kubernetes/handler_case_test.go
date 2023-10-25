@@ -18,6 +18,7 @@ var dnsPreserveCaseCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("ClUsTeR.lOcAl.	5	IN	SOA	ns.dns.ClUsTeR.lOcAl. hostmaster.ClUsTeR.lOcAl. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// A Service
 	{
@@ -26,6 +27,7 @@ var dnsPreserveCaseCases = []test.Case{
 		Answer: []dns.RR{
 			test.A("SvC1.TeStNs.SvC.cLuStEr.LoCaL.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	},
 	// SRV Service
 	{
@@ -37,6 +39,7 @@ var dnsPreserveCaseCases = []test.Case{
 		Extra: []dns.RR{
 			test.A("svc1.testns.svc.cLuStEr.LoCaL.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "Cluster.local.", Qtype: dns.TypeSOA,
@@ -44,6 +47,7 @@ var dnsPreserveCaseCases = []test.Case{
 		Answer: []dns.RR{
 			test.SOA("Cluster.local.	5	IN	SOA	ns.dns.Cluster.local. hostmaster.Cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 }
 

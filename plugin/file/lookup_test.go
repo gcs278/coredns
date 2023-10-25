@@ -19,7 +19,8 @@ var dnsTestCases = []test.Case{
 			test.A("a.miek.nl.	1800	IN	A	139.162.196.78"),
 			test.CNAME("www.miek.nl.	1800	IN	CNAME	a.miek.nl."),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "www.miek.nl.", Qtype: dns.TypeAAAA,
@@ -27,28 +28,32 @@ var dnsTestCases = []test.Case{
 			test.AAAA("a.miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 			test.CNAME("www.miek.nl.	1800	IN	CNAME	a.miek.nl."),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeSOA,
 		Answer: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeAAAA,
 		Answer: []dns.RR{
 			test.AAAA("miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "mIeK.NL.", Qtype: dns.TypeAAAA,
 		Answer: []dns.RR{
 			test.AAAA("miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeMX,
@@ -59,13 +64,15 @@ var dnsTestCases = []test.Case{
 			test.MX("miek.nl.	1800	IN	MX	5 alt1.aspmx.l.google.com."),
 			test.MX("miek.nl.	1800	IN	MX	5 alt2.aspmx.l.google.com."),
 		},
-		Ns: miekAuth,
+		Authoritative: true,
+		Ns:            miekAuth,
 	},
 	{
 		Qname: "a.miek.nl.", Qtype: dns.TypeSRV,
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "b.miek.nl.", Qtype: dns.TypeA,
@@ -73,6 +80,7 @@ var dnsTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "srv.miek.nl.", Qtype: dns.TypeSRV,
@@ -83,7 +91,8 @@ var dnsTestCases = []test.Case{
 			test.A("a.miek.nl.	1800	IN	A       139.162.196.78"),
 			test.AAAA("a.miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "mx.miek.nl.", Qtype: dns.TypeMX,
@@ -94,14 +103,16 @@ var dnsTestCases = []test.Case{
 			test.A("a.miek.nl.	1800	IN	A       139.162.196.78"),
 			test.AAAA("a.miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "asterisk.x.miek.nl.", Qtype: dns.TypeCNAME,
 		Answer: []dns.RR{
 			test.CNAME("asterisk.x.miek.nl. 1800    IN      CNAME   www.miek.nl."),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "a.b.x.miek.nl.", Qtype: dns.TypeCNAME,
@@ -109,13 +120,15 @@ var dnsTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "asterisk.y.miek.nl.", Qtype: dns.TypeA,
 		Answer: []dns.RR{
 			test.A("asterisk.y.miek.nl.     1800    IN      A       139.162.196.78"),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "foo.dname.miek.nl.", Qtype: dns.TypeCNAME,
@@ -123,29 +136,33 @@ var dnsTestCases = []test.Case{
 			test.DNAME("dname.miek.nl.     1800    IN      DNAME       x.miek.nl."),
 			test.CNAME("foo.dname.miek.nl.     1800    IN      CNAME       foo.x.miek.nl."),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "ext-cname.miek.nl.", Qtype: dns.TypeA,
 		Answer: []dns.RR{
 			test.CNAME("ext-cname.miek.nl.	1800	IN	CNAME	example.com."),
 		},
-		Rcode: dns.RcodeServerFailure,
-		Ns:    miekAuth,
+		Rcode:         dns.RcodeServerFailure,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "txt.miek.nl.", Qtype: dns.TypeTXT,
 		Answer: []dns.RR{
 			test.TXT(`txt.miek.nl.  1800	IN	TXT "v=spf1 a mx ~all"`),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "caa.miek.nl.", Qtype: dns.TypeCAA,
 		Answer: []dns.RR{
 			test.CAA(`caa.miek.nl.  1800	IN	CAA  0 issue letsencrypt.org`),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 }
 

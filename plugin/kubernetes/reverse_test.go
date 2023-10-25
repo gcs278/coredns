@@ -159,6 +159,7 @@ func TestReverse(t *testing.T) {
 			Answer: []dns.RR{
 				test.PTR("100.0.0.10.in-addr.arpa.      5    IN      PTR       ep1a.svc1.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "100.1.168.192.in-addr.arpa.", Qtype: dns.TypePTR,
@@ -166,6 +167,7 @@ func TestReverse(t *testing.T) {
 			Answer: []dns.RR{
 				test.PTR("100.1.168.192.in-addr.arpa.     5     IN      PTR       svc1.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 		{ // A PTR record query for an existing ipv6 endpoint should return a record
 			Qname: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.d.c.b.a.4.3.2.1.ip6.arpa.", Qtype: dns.TypePTR,
@@ -173,6 +175,7 @@ func TestReverse(t *testing.T) {
 			Answer: []dns.RR{
 				test.PTR("1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.d.c.b.a.4.3.2.1.ip6.arpa. 5 IN PTR ep1b.svc1.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 		{ // A PTR record query for an existing ipv6 endpoint should return a record
 			Qname: "a.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.0.0.7.7.0.0.0.0.d.f.ip6.arpa.", Qtype: dns.TypePTR,
@@ -180,6 +183,7 @@ func TestReverse(t *testing.T) {
 			Answer: []dns.RR{
 				test.PTR("a.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.0.0.7.7.0.0.0.0.d.f.ip6.arpa. 5 IN PTR ip6svc1ex.svc1.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 		{ // A PTR record query for an existing ipv6 endpoint should return a record
 			Qname: "6.a.b.9.2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.0.0.7.7.0.0.0.0.d.f.ip6.arpa.", Qtype: dns.TypePTR,
@@ -187,6 +191,7 @@ func TestReverse(t *testing.T) {
 			Answer: []dns.RR{
 				test.PTR("6.a.b.9.2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.0.0.7.7.0.0.0.0.d.f.ip6.arpa. 5 IN PTR ip6svc1in.svc1.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "101.0.0.10.in-addr.arpa.", Qtype: dns.TypePTR,
@@ -194,6 +199,7 @@ func TestReverse(t *testing.T) {
 			Ns: []dns.RR{
 				test.SOA("0.10.in-addr.arpa.	5	IN	SOA	ns.dns.0.10.in-addr.arpa. hostmaster.0.10.in-addr.arpa. 1502782828 7200 1800 86400 5"),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "example.org.cluster.local.", Qtype: dns.TypePTR,
@@ -201,6 +207,7 @@ func TestReverse(t *testing.T) {
 			Ns: []dns.RR{
 				test.SOA("cluster.local.       5     IN      SOA     ns.dns.cluster.local. hostmaster.cluster.local. 1502989566 7200 1800 86400 5"),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "svc1.testns.svc.cluster.local.", Qtype: dns.TypePTR,
@@ -208,6 +215,7 @@ func TestReverse(t *testing.T) {
 			Ns: []dns.RR{
 				test.SOA("cluster.local.       5     IN      SOA     ns.dns.cluster.local. hostmaster.cluster.local. 1502989566 7200 1800 86400 5"),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "svc1.testns.svc.0.10.in-addr.arpa.", Qtype: dns.TypeA,
@@ -215,6 +223,7 @@ func TestReverse(t *testing.T) {
 			Ns: []dns.RR{
 				test.SOA("0.10.in-addr.arpa.       5     IN      SOA     ns.dns.0.10.in-addr.arpa. hostmaster.0.10.in-addr.arpa. 1502989566 7200 1800 86400 5"),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "100.0.0.10.cluster.local.", Qtype: dns.TypePTR,
@@ -222,6 +231,7 @@ func TestReverse(t *testing.T) {
 			Ns: []dns.RR{
 				test.SOA("cluster.local.       5     IN      SOA     ns.dns.cluster.local. hostmaster.cluster.local. 1502989566 7200 1800 86400 5"),
 			},
+			Authoritative: true,
 		},
 		{
 			Qname: "99.0.0.10.in-addr.arpa.", Qtype: dns.TypePTR,
@@ -230,6 +240,7 @@ func TestReverse(t *testing.T) {
 				test.PTR("99.0.0.10.in-addr.arpa.      5    IN      PTR       double-ep.svc1.testns.svc.cluster.local."),
 				test.PTR("99.0.0.10.in-addr.arpa.      5    IN      PTR       double-ep.svc2.testns.svc.cluster.local."),
 			},
+			Authoritative: true,
 		},
 	}
 

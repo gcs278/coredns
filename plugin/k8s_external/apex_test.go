@@ -67,6 +67,7 @@ var testsApex = []test.Case{
 		Answer: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "example.com.", Qtype: dns.TypeNS, Rcode: dns.RcodeSuccess,
@@ -76,47 +77,55 @@ var testsApex = []test.Case{
 		Extra: []dns.RR{
 			test.A("ns1.dns.example.com.	5	IN	A	127.0.0.1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "dns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "dns.example.com.", Qtype: dns.TypeNS, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "ns1.dns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "ns1.dns.example.com.", Qtype: dns.TypeNS, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "ns1.dns.example.com.", Qtype: dns.TypeAAAA, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.dns.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "ns1.dns.example.com.", Qtype: dns.TypeA, Rcode: dns.RcodeSuccess,
 		Answer: []dns.RR{
 			test.A("ns1.dns.example.com.	5	IN	A	127.0.0.1"),
 		},
+		Authoritative: true,
 	},
 }

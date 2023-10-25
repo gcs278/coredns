@@ -46,9 +46,7 @@ func TestExternal(t *testing.T) {
 		if resp == nil {
 			t.Fatalf("Test %d, got nil message and no error for %q", i, r.Question[0].Name)
 		}
-		if !resp.Authoritative {
-			t.Error("Expected authoritative answer")
-		}
+		// Always expect authoritative answer
 		if err = test.SortAndCheck(resp, tc); err != nil {
 			t.Errorf("Test %d: %v", i, err)
 		}
@@ -62,6 +60,7 @@ var tests = []test.Case{
 		Answer: []dns.RR{
 			test.PTR("4.3.2.1.in-addr.arpa. 5 IN PTR svc1.testns.example.com."),
 		},
+		Authoritative: true,
 	},
 	// Bad PTR reverse lookup using existing service name
 	{
@@ -69,6 +68,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// Bad PTR reverse lookup using non-existing service name
 	{
@@ -76,6 +76,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// A Service
 	{
@@ -83,11 +84,13 @@ var tests = []test.Case{
 		Answer: []dns.RR{
 			test.A("svc1.testns.example.com.	5	IN	A	1.2.3.4"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "svc1.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
-		Answer: []dns.RR{test.SRV("svc1.testns.example.com.	5	IN	SRV	0 100 80 svc1.testns.example.com.")},
-		Extra:  []dns.RR{test.A("svc1.testns.example.com.  5       IN      A       1.2.3.4")},
+		Answer:        []dns.RR{test.SRV("svc1.testns.example.com.	5	IN	SRV	0 100 80 svc1.testns.example.com.")},
+		Extra:         []dns.RR{test.A("svc1.testns.example.com.  5       IN      A       1.2.3.4")},
+		Authoritative: true,
 	},
 	// SRV Service Not udp/tcp
 	{
@@ -95,6 +98,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// SRV Service
 	{
@@ -105,6 +109,7 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.A("svc1.testns.example.com.	5	IN	A	1.2.3.4"),
 		},
+		Authoritative: true,
 	},
 	// AAAA Service (with an existing A record, but no AAAA record)
 	{
@@ -112,6 +117,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// AAAA Service (non-existing service)
 	{
@@ -119,6 +125,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// A Service (non-existing service)
 	{
@@ -126,6 +133,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// A Service (non-existing namespace)
 	{
@@ -133,6 +141,7 @@ var tests = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// AAAA Service
 	{
@@ -140,6 +149,7 @@ var tests = []test.Case{
 		Answer: []dns.RR{
 			test.AAAA("svc6.testns.example.com.	5	IN	AAAA	1:2::5"),
 		},
+		Authoritative: true,
 	},
 	// SRV
 	{
@@ -150,6 +160,7 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.AAAA("svc6.testns.example.com.	5	IN	AAAA	1:2::5"),
 		},
+		Authoritative: true,
 	},
 	// SRV
 	{
@@ -160,18 +171,21 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.AAAA("svc6.testns.example.com.	5	IN	AAAA	1:2::5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "testns.example.com.", Qtype: dns.TypeA, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "testns.example.com.", Qtype: dns.TypeSOA, Rcode: dns.RcodeSuccess,
 		Ns: []dns.RR{
 			test.SOA("example.com.	5	IN	SOA	ns1.dns.example.com. hostmaster.example.com. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// svc11
 	{
@@ -179,6 +193,7 @@ var tests = []test.Case{
 		Answer: []dns.RR{
 			test.A("svc11.testns.example.com.	5	IN	A	2.3.4.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "_http._tcp.svc11.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -188,6 +203,7 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.A("svc11.testns.example.com.	5	IN	A	2.3.4.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "svc11.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -197,6 +213,7 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.A("svc11.testns.example.com.	5	IN	A	2.3.4.5"),
 		},
+		Authoritative: true,
 	},
 	// svc12
 	{
@@ -204,18 +221,21 @@ var tests = []test.Case{
 		Answer: []dns.RR{
 			test.CNAME("svc12.testns.example.com.	5	IN	CNAME	dummy.hostname"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "_http._tcp.svc12.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
 		Answer: []dns.RR{
 			test.SRV("_http._tcp.svc12.testns.example.com.	5	IN	SRV	0 100 80 dummy.hostname."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "svc12.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
 		Answer: []dns.RR{
 			test.SRV("svc12.testns.example.com.	5	IN	SRV	0 100 80 dummy.hostname."),
 		},
+		Authoritative: true,
 	},
 	// headless service
 	{
@@ -224,6 +244,7 @@ var tests = []test.Case{
 			test.A("svc-headless.testns.example.com.	5	IN	A	1.2.3.4"),
 			test.A("svc-headless.testns.example.com.	5	IN	A	1.2.3.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "svc-headless.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -235,6 +256,7 @@ var tests = []test.Case{
 			test.A("endpoint-svc-0.svc-headless.testns.example.com.	5	IN	A	1.2.3.4"),
 			test.A("endpoint-svc-1.svc-headless.testns.example.com.	5	IN	A	1.2.3.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "_http._tcp.svc-headless.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -246,6 +268,7 @@ var tests = []test.Case{
 			test.A("endpoint-svc-0.svc-headless.testns.example.com.	5	IN	A	1.2.3.4"),
 			test.A("endpoint-svc-1.svc-headless.testns.example.com.	5	IN	A	1.2.3.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "endpoint-svc-0.svc-headless.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -255,6 +278,7 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.A("endpoint-svc-0.svc-headless.testns.example.com.	5	IN	A	1.2.3.4"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "endpoint-svc-1.svc-headless.testns.example.com.", Qtype: dns.TypeSRV, Rcode: dns.RcodeSuccess,
@@ -264,18 +288,21 @@ var tests = []test.Case{
 		Extra: []dns.RR{
 			test.A("endpoint-svc-1.svc-headless.testns.example.com.	5	IN	A	1.2.3.5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "endpoint-svc-0.svc-headless.testns.example.com.", Qtype: dns.TypeA, Rcode: dns.RcodeSuccess,
 		Answer: []dns.RR{
 			test.A("endpoint-svc-0.svc-headless.testns.example.com.	5	IN	A	1.2.3.4"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "endpoint-svc-1.svc-headless.testns.example.com.", Qtype: dns.TypeA, Rcode: dns.RcodeSuccess,
 		Answer: []dns.RR{
 			test.A("endpoint-svc-1.svc-headless.testns.example.com.	5	IN	A	1.2.3.5"),
 		},
+		Authoritative: true,
 	},
 }
 

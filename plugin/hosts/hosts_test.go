@@ -63,30 +63,35 @@ var hostsTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.A("example.org. 3600	IN	A 10.0.0.1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "example.com.", Qtype: dns.TypeA,
 		Answer: []dns.RR{
 			test.A("example.com. 3600	IN	A 10.0.0.2"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "localhost.", Qtype: dns.TypeAAAA,
 		Answer: []dns.RR{
 			test.AAAA("localhost. 3600	IN	AAAA ::1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "1.0.0.10.in-addr.arpa.", Qtype: dns.TypePTR,
 		Answer: []dns.RR{
 			test.PTR("1.0.0.10.in-addr.arpa. 3600 PTR example.org."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "2.0.0.10.in-addr.arpa.", Qtype: dns.TypePTR,
 		Answer: []dns.RR{
 			test.PTR("2.0.0.10.in-addr.arpa. 3600 PTR example.com."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "1.0.0.127.in-addr.arpa.", Qtype: dns.TypePTR,
@@ -94,18 +99,22 @@ var hostsTestCases = []test.Case{
 			test.PTR("1.0.0.127.in-addr.arpa. 3600 PTR localhost."),
 			test.PTR("1.0.0.127.in-addr.arpa. 3600 PTR localhost.domain."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "example.org.", Qtype: dns.TypeAAAA,
-		Answer: []dns.RR{},
+		Answer:        []dns.RR{},
+		Authoritative: true,
 	},
 	{
 		Qname: "example.org.", Qtype: dns.TypeMX,
-		Answer: []dns.RR{},
+		Answer:        []dns.RR{},
+		Authoritative: true,
 	},
 	{
 		Qname: "fallthrough-example.org.", Qtype: dns.TypeAAAA,
 		Answer: []dns.RR{}, Rcode: dns.RcodeSuccess,
+		Authoritative: true,
 	},
 }
 

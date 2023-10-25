@@ -28,6 +28,7 @@ var atoomTestCases = []test.Case{
 			test.RRSIG("linode.atoom.net.	1800	IN	RRSIG	A 8 3 1800 20170112031301 20161213031301 53289 atoom.net. Z4Ka4OLDoyxj72CL vkI="),
 			test.RRSIG("linode.atoom.net.	1800	IN	RRSIG	AAAA 8 3 1800 20170112031301 20161213031301 53289 atoom.net. l+9Qc914zFH/okG2fzJ1q olQ="),
 		},
+		Authoritative: true,
 	},
 }
 

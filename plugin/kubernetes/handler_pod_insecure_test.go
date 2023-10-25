@@ -17,6 +17,7 @@ var podModeInsecureCases = []test.Case{
 		Answer: []dns.RR{
 			test.A("10-240-0-1.podns.pod.cluster.local.	5	IN	A	10.240.0.1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "172-0-0-2.podns.pod.cluster.local.", Qtype: dns.TypeA,
@@ -24,6 +25,7 @@ var podModeInsecureCases = []test.Case{
 		Answer: []dns.RR{
 			test.A("172-0-0-2.podns.pod.cluster.local.	5	IN	A	172.0.0.2"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "blah.podns.pod.cluster.local.", Qtype: dns.TypeA,
@@ -31,6 +33,7 @@ var podModeInsecureCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1515173576 7200 1800 86400 30"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "blah.podns.pod.cluster.local.", Qtype: dns.TypeAAAA,
@@ -38,6 +41,7 @@ var podModeInsecureCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1515173576 7200 1800 86400 30"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "blah.podns.pod.cluster.local.", Qtype: dns.TypeHINFO,
@@ -45,6 +49,7 @@ var podModeInsecureCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1515173576 7200 1800 86400 30"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "blah.pod-nons.pod.cluster.local.", Qtype: dns.TypeA,
@@ -52,6 +57,7 @@ var podModeInsecureCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1515173576 7200 1800 86400 30"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "podns.pod.cluster.local.", Qtype: dns.TypeA,
@@ -59,6 +65,7 @@ var podModeInsecureCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1515173576 7200 1800 86400 30"),
 		},
+		Authoritative: true,
 	},
 }
 

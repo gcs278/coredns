@@ -18,6 +18,7 @@ var kubeApexCases = []test.Case{
 		Answer: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "cluster.local.", Qtype: dns.TypeHINFO,
@@ -25,6 +26,7 @@ var kubeApexCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "cluster.local.", Qtype: dns.TypeNS,
@@ -35,6 +37,7 @@ var kubeApexCases = []test.Case{
 		Extra: []dns.RR{
 			test.A("ns.dns.cluster.local.   5       IN      A       127.0.0.1"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "cluster.local.", Qtype: dns.TypeA,
@@ -42,6 +45,7 @@ var kubeApexCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "cluster.local.", Qtype: dns.TypeAAAA,
@@ -49,6 +53,7 @@ var kubeApexCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "cluster.local.", Qtype: dns.TypeSRV,
@@ -56,6 +61,7 @@ var kubeApexCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 }
 

@@ -17,6 +17,7 @@ var podModeDisabledCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "172-0-0-2.podns.pod.cluster.local.", Qtype: dns.TypeA,
@@ -24,6 +25,7 @@ var podModeDisabledCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 }
 

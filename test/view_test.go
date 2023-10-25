@@ -151,8 +151,9 @@ func viewTest(t *testing.T, testName, addr, qname string, qtype uint16, expectRc
 
 		tc := test.Case{
 			Qname: qname, Qtype: qtype,
-			Rcode:  expectRcode,
-			Answer: expectAnswers,
+			Rcode:         expectRcode,
+			Answer:        expectAnswers,
+			Authoritative: true,
 		}
 
 		err = test.SortAndCheck(resp, tc)

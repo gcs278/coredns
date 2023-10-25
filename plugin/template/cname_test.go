@@ -15,8 +15,7 @@ import (
 
 func TestTruncatedCNAME(t *testing.T) {
 	up := &Upstub{
-		Qclass:    dns.ClassINET,
-		Truncated: true,
+		Qclass: dns.ClassINET,
 		Case: test.Case{
 			Qname: "cname.test.",
 			Qtype: dns.TypeA,
@@ -25,6 +24,7 @@ func TestTruncatedCNAME(t *testing.T) {
 				test.CNAME("cname.test. 600 IN CNAME test.up"),
 				test.A("test.up. 600 IN A 1.2.3.4"),
 			},
+			Truncated: true,
 		},
 	}
 
@@ -54,6 +54,7 @@ func TestTruncatedCNAME(t *testing.T) {
 	if !w.Msg.Truncated {
 		t.Error("Expected reply to be marked truncated.")
 	}
+	up.Authoritative = true
 	err = test.SortAndCheck(w.Msg, up.Case)
 	if err != nil {
 		t.Error(err)
@@ -63,8 +64,7 @@ func TestTruncatedCNAME(t *testing.T) {
 // Upstub implements an Upstreamer that returns a set response for test purposes
 type Upstub struct {
 	test.Case
-	Truncated bool
-	Qclass    uint16
+	Qclass uint16
 }
 
 // Lookup returns a set response

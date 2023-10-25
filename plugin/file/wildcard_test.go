@@ -18,14 +18,16 @@ var wildcardTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.TXT(`wild.dnssex.nl.	1800	IN	TXT	"Doing It Safe Is Better"`),
 		},
-		Ns: dnssexAuth[:len(dnssexAuth)-1], // remove RRSIG on the end
+		Ns:            dnssexAuth[:len(dnssexAuth)-1], // remove RRSIG on the end
+		Authoritative: true,
 	},
 	{
 		Qname: "a.wild.dnssex.nl.", Qtype: dns.TypeTXT,
 		Answer: []dns.RR{
 			test.TXT(`a.wild.dnssex.nl.	1800	IN	TXT	"Doing It Safe Is Better"`),
 		},
-		Ns: dnssexAuth[:len(dnssexAuth)-1], // remove RRSIG on the end
+		Ns:            dnssexAuth[:len(dnssexAuth)-1], // remove RRSIG on the end
+		Authoritative: true,
 	},
 	{
 		Qname: "wild.dnssex.nl.", Qtype: dns.TypeTXT, Do: true,
@@ -37,6 +39,7 @@ var wildcardTestCases = []test.Case{
 			test.NSEC("a.dnssex.nl.	14400	IN	NSEC	www.dnssex.nl. A AAAA RRSIG NSEC"),
 			test.RRSIG("a.dnssex.nl.	14400	IN	RRSIG	NSEC 8 3 14400 20160428190224 20160329190224 14460 dnssex.nl. S+UMs2ySgRaaRY"),
 		}, dnssexAuth...),
+		Authoritative: true,
 	},
 	{
 		Qname: "a.wild.dnssex.nl.", Qtype: dns.TypeTXT, Do: true,
@@ -48,6 +51,7 @@ var wildcardTestCases = []test.Case{
 			test.NSEC("a.dnssex.nl.	14400	IN	NSEC	www.dnssex.nl. A AAAA RRSIG NSEC"),
 			test.RRSIG("a.dnssex.nl.	14400	IN	RRSIG	NSEC 8 3 14400 20160428190224 20160329190224 14460 dnssex.nl. S+UMs2ySgRaaRY"),
 		}, dnssexAuth...),
+		Authoritative: true,
 	},
 	// nodata responses
 	{
@@ -55,6 +59,7 @@ var wildcardTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA(`dnssex.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1459281744 14400 3600 604800 14400`),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "wild.dnssex.nl.", Qtype: dns.TypeSRV, Do: true,
@@ -65,6 +70,7 @@ var wildcardTestCases = []test.Case{
 			test.RRSIG(`dnssex.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160428190224 20160329190224 14460 dnssex.nl. CA/Y3m9hCOiKC/8ieSOv8SeP964Bq++lyH8BZJcTaabAsERs4xj5PRtcxicwQXZiF8fYUCpROlUS0YR8Cdw=`),
 			test.SOA(`dnssex.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1459281744 14400 3600 604800 14400`),
 		},
+		Authoritative: true,
 	},
 }
 
@@ -107,14 +113,16 @@ var wildcardDoubleTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.TXT(`wild.w.example.org. IN	TXT	"Wildcard"`),
 		},
-		Ns: exampleAuth,
+		Ns:            exampleAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "wild.c.example.org.", Qtype: dns.TypeTXT,
 		Answer: []dns.RR{
 			test.TXT(`wild.c.example.org. IN	TXT	"c Wildcard"`),
 		},
-		Ns: exampleAuth,
+		Ns:            exampleAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "wild.d.example.org.", Qtype: dns.TypeTXT,
@@ -122,14 +130,16 @@ var wildcardDoubleTestCases = []test.Case{
 			test.TXT(`alias.example.org. IN	TXT	"Wildcard CNAME expansion"`),
 			test.CNAME(`wild.d.example.org. IN	CNAME	alias.example.org`),
 		},
-		Ns: exampleAuth,
+		Ns:            exampleAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "alias.example.org.", Qtype: dns.TypeTXT,
 		Answer: []dns.RR{
 			test.TXT(`alias.example.org. IN	TXT	"Wildcard CNAME expansion"`),
 		},
-		Ns: exampleAuth,
+		Ns:            exampleAuth,
+		Authoritative: true,
 	},
 }
 
@@ -184,13 +194,15 @@ func TestReplaceWithAsteriskLabel(t *testing.T) {
 var apexWildcardTestCases = []test.Case{
 	{
 		Qname: "foo.example.org.", Qtype: dns.TypeA,
-		Answer: []dns.RR{test.A(`foo.example.org. 3600	IN	A 127.0.0.54`)},
-		Ns:     []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Answer:        []dns.RR{test.A(`foo.example.org. 3600	IN	A 127.0.0.54`)},
+		Ns:            []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Authoritative: true,
 	},
 	{
 		Qname: "bar.example.org.", Qtype: dns.TypeA,
-		Answer: []dns.RR{test.A(`bar.example.org. 3600	IN	A 127.0.0.53`)},
-		Ns:     []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Answer:        []dns.RR{test.A(`bar.example.org. 3600	IN	A 127.0.0.53`)},
+		Ns:            []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Authoritative: true,
 	},
 }
 
@@ -224,18 +236,21 @@ func TestLookupApexWildcard(t *testing.T) {
 var multiWildcardTestCases = []test.Case{
 	{
 		Qname: "foo.example.org.", Qtype: dns.TypeA,
-		Answer: []dns.RR{test.A(`foo.example.org. 3600	IN	A 127.0.0.54`)},
-		Ns:     []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Answer:        []dns.RR{test.A(`foo.example.org. 3600	IN	A 127.0.0.54`)},
+		Ns:            []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Authoritative: true,
 	},
 	{
 		Qname: "bar.example.org.", Qtype: dns.TypeA,
-		Answer: []dns.RR{test.A(`bar.example.org. 3600	IN	A 127.0.0.53`)},
-		Ns:     []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Answer:        []dns.RR{test.A(`bar.example.org. 3600	IN	A 127.0.0.53`)},
+		Ns:            []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Authoritative: true,
 	},
 	{
 		Qname: "bar.intern.example.org.", Qtype: dns.TypeA,
-		Answer: []dns.RR{test.A(`bar.intern.example.org. 3600	IN	A 127.0.1.52`)},
-		Ns:     []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Answer:        []dns.RR{test.A(`bar.intern.example.org. 3600	IN	A 127.0.1.52`)},
+		Ns:            []dns.RR{test.NS(`example.org. 3600 IN NS b.iana-servers.net.`)},
+		Authoritative: true,
 	},
 }
 

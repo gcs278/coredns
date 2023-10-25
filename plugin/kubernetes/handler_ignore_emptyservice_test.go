@@ -18,6 +18,7 @@ var dnsEmptyServiceTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 	// CNAME to external
 	{
@@ -26,6 +27,7 @@ var dnsEmptyServiceTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.CNAME("external.testns.svc.cluster.local.	5	IN	CNAME	ext.interwebs.test."),
 		},
+		Authoritative: true,
 	},
 }
 

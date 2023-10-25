@@ -19,7 +19,8 @@ var dnssecTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. FIrzy07acBbtyQczy1dc="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
-		Ns: auth,
+		Ns:            auth,
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeAAAA, Do: true,
@@ -27,7 +28,8 @@ var dnssecTestCases = []test.Case{
 			test.AAAA("miek.nl.	1800	IN	AAAA	2a01:7e00::f03c:91ff:fef1:6735"),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	AAAA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. SsRT="),
 		},
-		Ns: auth,
+		Ns:            auth,
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeNS, Do: true,
@@ -38,6 +40,7 @@ var dnssecTestCases = []test.Case{
 			test.NS("miek.nl.	1800	IN	NS	omval.tednet.nl."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	NS 8 2 1800 20160426031301 20160327031301 12051 miek.nl. ZLtsQhwaz+lHfNpztFoR1Vxs="),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeMX, Do: true,
@@ -49,7 +52,8 @@ var dnssecTestCases = []test.Case{
 			test.MX("miek.nl.	1800	IN	MX	5 alt2.aspmx.l.google.com."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	MX 8 2 1800 20160426031301 20160327031301 12051 miek.nl. kLqG+iOr="),
 		},
-		Ns: auth,
+		Ns:            auth,
+		Authoritative: true,
 	},
 	{
 		Qname: "www.miek.nl.", Qtype: dns.TypeA, Do: true,
@@ -59,7 +63,8 @@ var dnssecTestCases = []test.Case{
 			test.CNAME("www.miek.nl.	1800	IN	CNAME	a.miek.nl."),
 			test.RRSIG("www.miek.nl. 1800	RRSIG	CNAME 8 3 1800 20160426031301 20160327031301 12051 miek.nl.  NVZmMJaypS+wDL2Lar4Zw1zF"),
 		},
-		Ns: auth,
+		Ns:            auth,
+		Authoritative: true,
 	},
 	{
 		// NoData
@@ -70,6 +75,7 @@ var dnssecTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. FIrzy07acBbtyQczy1dc="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "b.miek.nl.", Qtype: dns.TypeA, Do: true,
@@ -82,6 +88,7 @@ var dnssecTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. FIrzy07acBbtyQczy1dc="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "b.blaat.miek.nl.", Qtype: dns.TypeA, Do: true,
@@ -94,6 +101,7 @@ var dnssecTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. FIrzy07acBbtyQczy1dc="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "b.a.miek.nl.", Qtype: dns.TypeA, Do: true,
@@ -105,6 +113,7 @@ var dnssecTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160426031301 20160327031301 12051 miek.nl. FIrzy07acBbtyQczy1dc="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 }
 

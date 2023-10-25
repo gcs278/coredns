@@ -69,7 +69,6 @@ var cacheTestCases = []cacheTestCase{
 	},
 	{
 		// Test truncated responses don't get cached
-		out: test.Case{},
 		in: test.Case{
 			Qname: "miek.nl.", Qtype: dns.TypeMX,
 			Answer:    []dns.RR{test.MX("miek.nl.	1800	IN	MX	1 aspmx.l.google.com.")},
@@ -131,16 +130,6 @@ var cacheTestCases = []cacheTestCase{
 	},
 	{
 		// This doesn't cache because this RRSIG is expired
-		out: test.Case{
-			Qname: "miek.nl.", Qtype: dns.TypeMX,
-			Do: true,
-			Answer: []dns.RR{
-				test.MX("miek.nl.	3600	IN	MX	1 aspmx.l.google.com."),
-				test.MX("miek.nl.	3600	IN	MX	10 aspmx2.googlemail.com."),
-				test.RRSIG("miek.nl.	3600	IN	RRSIG	MX 8 2 1800 20160521031301 20160421031301 12051 miek.nl. lAaEzB5teQLLKyDenatmyhca7blLRg9DoGNrhe3NReBZN5C5/pMQk8Jc u25hv2fW23/SLm5IC2zaDpp2Fzgm6Jf7e90/yLcwQPuE7JjS55WMF+HE LEh7Z6AEb+Iq4BWmNhUz6gPxD4d9eRMs7EAzk13o1NYi5/JhfL6IlaYy qkc="),
-			},
-			RecursionAvailable: true,
-		},
 		in: test.Case{
 			Qname: "miek.nl.", Qtype: dns.TypeMX,
 			Do: true,
@@ -208,7 +197,6 @@ var cacheTestCases = []cacheTestCase{
 				test.SOA("example.org. 3600 IN	SOA	sns.dns.icann.org. noc.dns.icann.org. 2016082540 7200 3600 1209600 3600"),
 			},
 		},
-		out:         test.Case{},
 		shouldCache: false,
 	},
 	{
@@ -220,7 +208,6 @@ var cacheTestCases = []cacheTestCase{
 				test.A("pos-disabled.example.org. 3600 IN	A	127.0.0.1"),
 			},
 		},
-		out:         test.Case{},
 		shouldCache: false,
 	},
 	{
@@ -297,7 +284,6 @@ func TestCacheInsertion(t *testing.T) {
 
 		m := tc.in.Msg()
 		m = cacheMsg(m, tc.in)
-		m.Authoritative = true
 
 		state := request.Request{W: &test.ResponseWriter{}, Req: m}
 
@@ -325,6 +311,8 @@ func TestCacheInsertion(t *testing.T) {
 		if found {
 			resp := i.toMsg(m, time.Now().UTC(), state.Do(), m.AuthenticatedData)
 
+			// Cache entry is always authoritative
+			tc.out.Authoritative = true
 			if err := test.Header(tc.out, resp); err != nil {
 				t.Logf("Cache %v", resp)
 				t.Error(err)

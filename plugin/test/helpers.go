@@ -138,6 +138,17 @@ func Header(tc Case, resp *dns.Msg) error {
 	if len(resp.Extra) != len(tc.Extra) {
 		return fmt.Errorf("additional for %q contained %d results, %d expected", tc.Qname, len(resp.Extra), len(tc.Extra))
 	}
+
+	if resp.Truncated != tc.Truncated {
+		return fmt.Errorf("truncated bit for %q was %t, %t expected", tc.Qname, resp.Truncated, tc.Truncated)
+	}
+	if resp.RecursionAvailable != tc.RecursionAvailable {
+		return fmt.Errorf("recursion available bit for %q was %t, %t expected", tc.Qname, resp.RecursionAvailable, tc.RecursionAvailable)
+	}
+	if resp.Authoritative != tc.Authoritative {
+		return fmt.Errorf("authoritative answer bit for %q was %t, %t expected", tc.Qname, resp.Authoritative, tc.Authoritative)
+	}
+
 	return nil
 }
 

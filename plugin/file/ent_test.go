@@ -17,6 +17,7 @@ var entTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "b.c.miek.nl.", Qtype: dns.TypeA, Do: true,
@@ -26,6 +27,7 @@ var entTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 8 2 1800 20160502144311 20160402144311 12051 miek.nl. KegoBxA3Tbrhlc4cEdkRiteIkOfsq"),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 }
 

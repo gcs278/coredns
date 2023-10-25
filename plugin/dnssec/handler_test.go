@@ -19,6 +19,7 @@ var dnssecTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.DNSKEY("miek.nl.	3600	IN	DNSKEY	257 3 13 0J8u0XJ9GNGFEBXuAmLu04taHG4"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeDNSKEY, Do: true,
@@ -26,6 +27,7 @@ var dnssecTestCases = []test.Case{
 			test.DNSKEY("miek.nl.	3600	IN	DNSKEY	257 3 13 0J8u0XJ9GNGFEBXuAmLu04taHG4"),
 			test.RRSIG("miek.nl.	3600	IN	RRSIG	DNSKEY 13 2 3600 20160503150844 20160425120844 18512 miek.nl. Iw/kNOyM"),
 		},
+		Authoritative: true,
 		/* Extra: []dns.RR{test.OPT(4096, true)}, this has moved to the server and can't be test here */
 	},
 }
@@ -36,6 +38,7 @@ var dnsTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.DNSKEY("miek.nl.	3600	IN	DNSKEY	257 3 13 0J8u0XJ9GNGFEBXuAmLu04taHG4"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeNS, Do: true,
@@ -43,6 +46,7 @@ var dnsTestCases = []test.Case{
 			test.NS("miek.nl.	1800	IN      NS      linode.atoom.net."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	NS 13 2 1800 20220101121212 20220201121212 18512 miek.nl. RandomNotChecked"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "deleg.miek.nl.", Qtype: dns.TypeNS, Do: true,
@@ -68,12 +72,14 @@ var dnsTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.NS("miek.nl.	1800	IN	NS	linode.atoom.net."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "unsigned.miek.nl.", Qtype: dns.TypeDS,
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeDS, Do: true,
@@ -83,6 +89,7 @@ var dnsTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 13 2 3600 20171220141741 20171212111741 18512 miek.nl. 8bLTReqmuQtw=="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "deleg.miek.nl.", Qtype: dns.TypeDS, Do: true,
@@ -94,6 +101,7 @@ var dnsTestCases = []test.Case{
 			test.NS("miek.nl.	1800	IN	NS	linode.atoom.net."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	NS 13 2 3600 20161217114912 20161209084912 18512 miek.nl. ad9gA8VWgF1H8ze9/0Rk2Q=="),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "unsigned.miek.nl.", Qtype: dns.TypeDS, Do: true,
@@ -103,6 +111,7 @@ var dnsTestCases = []test.Case{
 			test.NSEC("unsigned.miek.nl.	1800	IN	NSEC	\\000.unsigned.miek.nl. NS RRSIG NSEC"),
 			test.RRSIG("unsigned.miek.nl.	1800	IN	RRSIG	NSEC 13 3 1800 20220101121212 20220201121212 18512 miek.nl. RandomNotChecked"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeMX,
@@ -112,6 +121,7 @@ var dnsTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.NS("miek.nl.	1800	IN	NS	linode.atoom.net."),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeMX, Do: true,
@@ -123,6 +133,7 @@ var dnsTestCases = []test.Case{
 			test.NS("miek.nl.	1800	IN	NS	linode.atoom.net."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	NS 13 2 3600 20161217114912 20161209084912 18512 miek.nl. ad9gA8VWgF1H8ze9/0Rk2Q=="),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "www.miek.nl.", Qtype: dns.TypeAAAA, Do: true,
@@ -136,6 +147,7 @@ var dnsTestCases = []test.Case{
 			test.NS("miek.nl.	1800	IN	NS	linode.atoom.net."),
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	NS 13 2 3600 20161217114912 20161209084912 18512 miek.nl. ad9gA8VWgF1H8ze9/0Rk2Q=="),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "wwwww.miek.nl.", Qtype: dns.TypeAAAA, Do: true,
@@ -145,6 +157,7 @@ var dnsTestCases = []test.Case{
 			test.NSEC("wwwww.miek.nl.	1800	IN	NSEC	\\000.wwwww.miek.nl. A HINFO TXT LOC SRV CERT SSHFP RRSIG NSEC TLSA HIP OPENPGPKEY SPF"),
 			test.RRSIG("wwwww.miek.nl.	1800	IN	RRSIG	NSEC 13 3 3600 20171220135446 20171212105446 18512 miek.nl. cVUQWs8xw=="),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeHINFO, Do: true,
@@ -154,6 +167,7 @@ var dnsTestCases = []test.Case{
 			test.RRSIG("miek.nl.	1800	IN	RRSIG	SOA 13 2 3600 20171220141741 20171212111741 18512 miek.nl. 8bLTReqmuQtw=="),
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 	{
 		Qname: "www.example.org.", Qtype: dns.TypeAAAA, Do: true,
@@ -207,9 +221,6 @@ func TestLookupDNSKEY(t *testing.T) {
 		}
 
 		resp := rec.Msg
-		if !resp.Authoritative {
-			t.Errorf("Authoritative Answer should be true, got false")
-		}
 
 		if err := test.SortAndCheck(resp, tc); err != nil {
 			t.Error(err)

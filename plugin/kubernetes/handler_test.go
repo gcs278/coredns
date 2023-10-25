@@ -16,8 +16,7 @@ import (
 )
 
 type kubeTestCase struct {
-	Upstream  Upstreamer
-	Truncated bool
+	Upstream Upstreamer
 	test.Case
 }
 
@@ -29,6 +28,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("svc1.testns.svc.cluster.local.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svcempty.testns.svc.cluster.local.", Qtype: dns.TypeA,
@@ -36,24 +36,28 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("svcempty.testns.svc.cluster.local.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svc1.testns.svc.cluster.local.", Qtype: dns.TypeSRV,
-		Rcode:  dns.RcodeSuccess,
-		Answer: []dns.RR{test.SRV("svc1.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svc1.testns.svc.cluster.local.")},
-		Extra:  []dns.RR{test.A("svc1.testns.svc.cluster.local.  5       IN      A       10.0.0.1")},
+		Rcode:         dns.RcodeSuccess,
+		Answer:        []dns.RR{test.SRV("svc1.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svc1.testns.svc.cluster.local.")},
+		Extra:         []dns.RR{test.A("svc1.testns.svc.cluster.local.  5       IN      A       10.0.0.1")},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svcempty.testns.svc.cluster.local.", Qtype: dns.TypeSRV,
-		Rcode:  dns.RcodeSuccess,
-		Answer: []dns.RR{test.SRV("svcempty.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svcempty.testns.svc.cluster.local.")},
-		Extra:  []dns.RR{test.A("svcempty.testns.svc.cluster.local.  5       IN      A       10.0.0.1")},
+		Rcode:         dns.RcodeSuccess,
+		Answer:        []dns.RR{test.SRV("svcempty.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svcempty.testns.svc.cluster.local.")},
+		Extra:         []dns.RR{test.A("svcempty.testns.svc.cluster.local.  5       IN      A       10.0.0.1")},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svc6.testns.svc.cluster.local.", Qtype: dns.TypeSRV,
-		Rcode:  dns.RcodeSuccess,
-		Answer: []dns.RR{test.SRV("svc6.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svc6.testns.svc.cluster.local.")},
-		Extra:  []dns.RR{test.AAAA("svc6.testns.svc.cluster.local.  5       IN      AAAA       1234:abcd::1")},
+		Rcode:         dns.RcodeSuccess,
+		Answer:        []dns.RR{test.SRV("svc6.testns.svc.cluster.local.	5	IN	SRV	0 100 80 svc6.testns.svc.cluster.local.")},
+		Extra:         []dns.RR{test.AAAA("svc6.testns.svc.cluster.local.  5       IN      AAAA       1234:abcd::1")},
+		Authoritative: true,
 	}},
 	// SRV Service
 	{Case: test.Case{
@@ -66,6 +70,7 @@ var dnsTestCases = []kubeTestCase{
 		Extra: []dns.RR{
 			test.A("svc1.testns.svc.cluster.local.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 
@@ -77,6 +82,7 @@ var dnsTestCases = []kubeTestCase{
 		Extra: []dns.RR{
 			test.A("svcempty.testns.svc.cluster.local.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	}},
 	// A Service (Headless)
 	{Case: test.Case{
@@ -88,6 +94,7 @@ var dnsTestCases = []kubeTestCase{
 			test.A("hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.4"),
 			test.A("hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.5"),
 		},
+		Authoritative: true,
 	}},
 	// A Service (Headless and Portless)
 	{Case: test.Case{
@@ -96,6 +103,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("hdlsprtls.testns.svc.cluster.local.	5	IN	A	172.0.0.20"),
 		},
+		Authoritative: true,
 	}},
 	// An Endpoint with no port
 	{Case: test.Case{
@@ -104,6 +112,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("172-0-0-20.hdlsprtls.testns.svc.cluster.local.	5	IN	A	172.0.0.20"),
 		},
+		Authoritative: true,
 	}},
 	// An Endpoint ip
 	{Case: test.Case{
@@ -112,6 +121,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("172-0-0-2.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.2"),
 		},
+		Authoritative: true,
 	}},
 	// A Endpoint ip
 	{Case: test.Case{
@@ -120,6 +130,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("172-0-0-3.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.3"),
 		},
+		Authoritative: true,
 	}},
 	// An Endpoint by name
 	{Case: test.Case{
@@ -129,6 +140,7 @@ var dnsTestCases = []kubeTestCase{
 			test.A("dup-name.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.4"),
 			test.A("dup-name.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.5"),
 		},
+		Authoritative: true,
 	}},
 	// SRV Service (Headless)
 	{Case: test.Case{
@@ -149,6 +161,7 @@ var dnsTestCases = []kubeTestCase{
 			test.A("dup-name.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.4"),
 			test.A("dup-name.hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.5"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{ // An A record query for an existing headless service should return a record for each of its ipv4 endpoints
 		Qname: "hdls1.testns.svc.cluster.local.", Qtype: dns.TypeA,
@@ -159,12 +172,14 @@ var dnsTestCases = []kubeTestCase{
 			test.A("hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.4"),
 			test.A("hdls1.testns.svc.cluster.local.	5	IN	A	172.0.0.5"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA
 	{Case: test.Case{
 		Qname: "5678-abcd--2.hdls1.testns.svc.cluster.local", Qtype: dns.TypeAAAA,
-		Rcode:  dns.RcodeSuccess,
-		Answer: []dns.RR{test.AAAA("5678-abcd--2.hdls1.testns.svc.cluster.local.	5	IN	AAAA	5678:abcd::2")},
+		Rcode:         dns.RcodeSuccess,
+		Answer:        []dns.RR{test.AAAA("5678-abcd--2.hdls1.testns.svc.cluster.local.	5	IN	AAAA	5678:abcd::2")},
+		Authoritative: true,
 	}},
 	// CNAME External
 	{Case: test.Case{
@@ -173,6 +188,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.CNAME("external.testns.svc.cluster.local.	5	IN	CNAME	ext.interwebs.test."),
 		},
+		Authoritative: true,
 	}},
 	// CNAME External Truncated Lookup
 	{
@@ -183,10 +199,11 @@ var dnsTestCases = []kubeTestCase{
 				test.A("ext.interwebs.test.	5	IN	A	1.2.3.4"),
 				test.CNAME("external.testns.svc.cluster.local.	5	IN	CNAME	ext.interwebs.test."),
 			},
+			Truncated:     true,
+			Authoritative: true,
 		},
 		Upstream: &Upstub{
-			Truncated: true,
-			Qclass:    dns.ClassINET,
+			Qclass: dns.ClassINET,
 			Case: test.Case{
 				Qname: "external.testns.svc.cluster.local.",
 				Qtype: dns.TypeA,
@@ -194,9 +211,9 @@ var dnsTestCases = []kubeTestCase{
 					test.A("ext.interwebs.test.	5	IN	A	1.2.3.4"),
 					test.CNAME("external.testns.svc.cluster.local.	5	IN	CNAME	ext.interwebs.test."),
 				},
+				Truncated: true,
 			},
 		},
-		Truncated: true,
 	},
 	// CNAME External To Internal Service
 	{Case: test.Case{
@@ -206,6 +223,7 @@ var dnsTestCases = []kubeTestCase{
 			test.CNAME("external-to-service.testns.svc.cluster.local.	5	IN	CNAME	svc1.testns.svc.cluster.local."),
 			test.A("svc1.testns.svc.cluster.local.	5	IN	A	10.0.0.1"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA Service (with an existing A record, but no AAAA record)
 	{Case: test.Case{
@@ -214,6 +232,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA Service (non-existing service)
 	{Case: test.Case{
@@ -222,6 +241,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A Service (non-existing service)
 	{Case: test.Case{
@@ -230,6 +250,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A Service (non-existing namespace)
 	{Case: test.Case{
@@ -238,6 +259,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// TXT Schema
 	{Case: test.Case{
@@ -246,6 +268,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.TXT("dns-version.cluster.local 28800 IN TXT 1.1.0"),
 		},
+		Authoritative: true,
 	}},
 	// A TXT record does not exist but another record for the same FQDN does
 	{Case: test.Case{
@@ -254,6 +277,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A TXT record does not exist and neither does another record for the same FQDN
 	{Case: test.Case{
@@ -262,6 +286,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A Service (Headless) does not exist
 	{Case: test.Case{
@@ -270,6 +295,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A Service does not exist
 	{Case: test.Case{
@@ -278,6 +304,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA Service
 	{Case: test.Case{
@@ -286,6 +313,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.AAAA("svc6.testns.svc.cluster.local.	5	IN	AAAA	1234:abcd::1"),
 		},
+		Authoritative: true,
 	}},
 	// SRV
 	{Case: test.Case{
@@ -297,6 +325,7 @@ var dnsTestCases = []kubeTestCase{
 		Extra: []dns.RR{
 			test.AAAA("svc6.testns.svc.cluster.local.	5	IN	AAAA	1234:abcd::1"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA Service (Headless)
 	{Case: test.Case{
@@ -306,6 +335,7 @@ var dnsTestCases = []kubeTestCase{
 			test.AAAA("hdls1.testns.svc.cluster.local.	5	IN	AAAA	5678:abcd::1"),
 			test.AAAA("hdls1.testns.svc.cluster.local.	5	IN	AAAA	5678:abcd::2"),
 		},
+		Authoritative: true,
 	}},
 	// AAAA Endpoint
 	{Case: test.Case{
@@ -314,6 +344,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.AAAA("5678-abcd--1.hdls1.testns.svc.cluster.local.	5	IN	AAAA	5678:abcd::1"),
 		},
+		Authoritative: true,
 	}},
 
 	{Case: test.Case{
@@ -322,6 +353,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "pod.cluster.local.", Qtype: dns.TypeA,
@@ -329,6 +361,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "testns.svc.cluster.local.", Qtype: dns.TypeA,
@@ -336,6 +369,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// NS query for qname != zone (existing domain)
 	{Case: test.Case{
@@ -344,6 +378,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// NS query for qname != zone (existing domain)
 	{Case: test.Case{
@@ -352,6 +387,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// NS query for qname != zone (non existing domain)
 	{Case: test.Case{
@@ -360,6 +396,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// NS query for qname != zone (non existing domain)
 	{Case: test.Case{
@@ -368,6 +405,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// Dual Stack ClusterIP Services
 	{Case: test.Case{
@@ -376,6 +414,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.A("svc-dual-stack.testns.svc.cluster.local.	5	IN	A	10.0.0.3"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svc-dual-stack.testns.svc.cluster.local.", Qtype: dns.TypeAAAA,
@@ -383,6 +422,7 @@ var dnsTestCases = []kubeTestCase{
 		Answer: []dns.RR{
 			test.AAAA("svc-dual-stack.testns.svc.cluster.local.	5	IN	AAAA	10::3"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svc-dual-stack.testns.svc.cluster.local.", Qtype: dns.TypeSRV,
@@ -392,6 +432,7 @@ var dnsTestCases = []kubeTestCase{
 			test.A("svc-dual-stack.testns.svc.cluster.local.  5       IN      A       10.0.0.3"),
 			test.AAAA("svc-dual-stack.testns.svc.cluster.local.  5       IN      AAAA       10::3"),
 		},
+		Authoritative: true,
 	}},
 	{Case: test.Case{
 		Qname: "svc1.testns.svc.cluster.local.", Qtype: dns.TypeSOA,
@@ -399,6 +440,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A query for a subdomain of an external service should not resolve to the external service
 	{Case: test.Case{
@@ -407,6 +449,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 	// A query for a subdomain of a subdomain of an external service should not resolve to the external service
 	{Case: test.Case{
@@ -415,6 +458,7 @@ var dnsTestCases = []kubeTestCase{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	}},
 }
 
@@ -444,10 +488,6 @@ func TestServeDNS(t *testing.T) {
 		resp := w.Msg
 		if resp == nil {
 			t.Fatalf("Test %d, got nil message and no error for %q", i, r.Question[0].Name)
-		}
-
-		if tc.Truncated != resp.Truncated {
-			t.Errorf("Expected truncation %t, got truncation %t", tc.Truncated, resp.Truncated)
 		}
 
 		// Before sorting, make sure that CNAMES do not appear after their target records
@@ -522,6 +562,7 @@ var notSyncedTestCases = []test.Case{
 		Ns: []dns.RR{
 			test.SOA("cluster.local.	5	IN	SOA	ns.dns.cluster.local. hostmaster.cluster.local. 1499347823 7200 1800 86400 5"),
 		},
+		Authoritative: true,
 	},
 }
 
@@ -815,8 +856,7 @@ func (APIConnServeTest) GetNamespaceByName(name string) (*object.Namespace, erro
 // Upstub implements an Upstreamer that returns a set response for test purposes
 type Upstub struct {
 	test.Case
-	Truncated bool
-	Qclass    uint16
+	Qclass uint16
 }
 
 // Lookup returns a set response

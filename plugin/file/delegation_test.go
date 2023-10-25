@@ -72,13 +72,15 @@ var delegationTestCases = []test.Case{
 		Answer: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
-		Ns: miekAuth,
+		Ns:            miekAuth,
+		Authoritative: true,
 	},
 	{
 		Qname: "miek.nl.", Qtype: dns.TypeAAAA,
 		Ns: []dns.RR{
 			test.SOA("miek.nl.	1800	IN	SOA	linode.atoom.net. miek.miek.nl. 1282630057 14400 3600 604800 14400"),
 		},
+		Authoritative: true,
 	},
 }
 
@@ -151,6 +153,7 @@ var secureDelegationTestCases = []test.Case{
 			test.NS("example.org.	1800	IN	NS	b.iana-servers.net."),
 			test.RRSIG("example.org.	1800	IN	RRSIG	NS 13 2 1800 20161129153240 20161030153240 49035 example.org. llrHoIuw="),
 		},
+		Authoritative: true,
 	},
 }
 
